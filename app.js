@@ -6,11 +6,13 @@ import indexRouter from './routes/index';
 import userRouter from './routes/users';
 
 import passport from 'passport'
-import { localStrategy } from './passport'
+import localStrategy from './passport'
+
+import connectToDb from './config/db';
+
+connectToDb();
 
 const app = express();
-
-localStrategy();
 
 app.use(passport.initialize());
 app.use(logger('dev'));
@@ -19,7 +21,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
 
-// app.use('/', indexRouter);
+localStrategy(passport);
+
+app.use('/', indexRouter);
 app.use('/users', userRouter);
 
 export default app;

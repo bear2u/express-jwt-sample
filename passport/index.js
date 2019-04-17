@@ -1,5 +1,7 @@
 import localStrategy from './localStrategy'
+import jwtStrategy from './jwtStrategy'
 
-module.exports = {
-    localStrategy
+module.exports = (passport) => {
+    localStrategy(passport),
+    jwtStrategy(passport)
 }
